@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -16,7 +17,7 @@ func httpServer() {
 	testIP := checker.IP{}
 	ctx := context.Background()
 	log.Print("dialing")
-	conn, err := grpc.DialContext(ctx, "localhost:8081", grpc.WithInsecure())
+	conn, err := grpc.DialContext(ctx, fmt.Sprintf("localhost:%s", grpcPort), grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Failed to dial bufnet: %v", err)
 	}
@@ -51,7 +52,7 @@ func httpServer() {
 		}
 	})
 
-	if err := g.Run(":8082"); err != nil {
+	if err := g.Run(fmt.Sprintf(":%s", httpPort)); err != nil {
 		log.Fatalf("Failed to run server: %v", err)
 	}
 

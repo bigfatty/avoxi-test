@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net"
 
@@ -15,8 +16,10 @@ const (
 )
 
 var (
-	err error
-	db  *mmdb.Reader
+	err      error
+	db       *mmdb.Reader
+	grpcPort = "8081"
+	httpPort = "8082"
 )
 
 type ipCheckerServer struct{}
@@ -49,12 +52,12 @@ func main() {
 		log.Fatal(err)
 	}
 
-	lis, err := net.Listen("tcp", "localhost:8081")
+	lis, err := net.Listen("tcp", fmt.Sprintf("localhost:%s", grpcPort))
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	var ipServer = ipCheckerServer{}
-	// Create an array of gRPC options with the credentials
+	// Create an array of gRPC options - not used but may be useful later
 	opts := []grpc.ServerOption{}
 	grpcServer := grpc.NewServer(opts...)
 	checker.RegisterIPCheckerServer(grpcServer, &ipServer)
@@ -69,6 +72,7 @@ func main() {
 
 }
 
+// For test purposes only
 func testClient() {
 	testIP := checker.IP{}
 	ctx := context.Background()

@@ -23,6 +23,7 @@ func lookup(ipMesg *checker.IP, resp *checker.Response) (isAllowed bool, err err
 			Names   map[string]string `maxminddb:"names"`
 		} `maxminddb:"country"`
 	}
+
 	ip, isValid := validateIP(ipString)
 	if isValid == false {
 		return
@@ -32,9 +33,10 @@ func lookup(ipMesg *checker.IP, resp *checker.Response) (isAllowed bool, err err
 	if err != nil {
 		log.Fatal(err)
 	}
+	// hardcoded because it's just a test
 	resp.Country = record.Country.Names["en"]
 
-	log.Printf("%+#v", record)
+	// Check to see if the IP's country code matches the ones provided.
 	if _, ok := whitelistMap[record.Country.ISOCode]; ok {
 		return true, err
 	}

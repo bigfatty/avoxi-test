@@ -7,10 +7,6 @@ package checker;
 
 service IPChecker {
   rpc CheckIp(IP) returns (Response) {
-    option (google.api.http) = {
-      get: "/v1/{ip}"
-      body: "countries"
-    };
   }
 }
 
