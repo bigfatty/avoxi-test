@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+import "third_party/googleapis/google/api/annotations.proto";
+
+package checker;
+
+
+service IPChecker {
+  rpc CheckIp(IP) returns (Response) {
+    option (google.api.http) = {
+      get: "/v1/{ip}"
+      body: "countries"
+    };
+  }
+}
+
+
+message IP {
+  string ip = 1;
+  map<string, bool> countries = 2;
+}
+
+
+message Response {
+  bool isBlacklisted = 1;
+  string country = 2;
+}

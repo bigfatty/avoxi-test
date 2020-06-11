@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: avoxi-test-mjl
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: avoxi-test-mjl
+  template:
+    containers:
+      - command:
+          - /main
+        image: wcp-cto-oss-docker-local.artifactory.swg-devops.com/api-pnp-status:5714b4747929492e7a51a81c18c630d4df54d181-425-v1.0.11
+        imagePullPolicy: IfNotPresent
+        name: avoxi-test
+        ports:
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+status: {}
