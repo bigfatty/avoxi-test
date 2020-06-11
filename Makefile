@@ -73,17 +73,8 @@ image: binary
 # tag and push official image
 .PHONY: image-push
 image-push:
-	git diff-index --quiet HEAD -- #error if uncommitted changes
+	
 	$(eval IMAGE_TAG = $(shell git rev-parse HEAD))
-	docker tag $(IMAGE_NAME):latest $(IMAGE_REGISTRY)/$(IMAGE_NAME):$(IMAGE_TAG)
-	docker push $(IMAGE_REGISTRY)/$(IMAGE_NAME):$(IMAGE_TAG)
-
-
-# push image and deploy to OSSDev personal namespace
-# todo: run kdep with custom tag
-.PHONY: deploy
-deploy:
-	$(eval IMAGE_TAG = $(shell whoami|cut -d@ -f1)-$(shell date +%s))
 	docker tag $(IMAGE_NAME):latest $(IMAGE_REGISTRY)/$(IMAGE_NAME):$(IMAGE_TAG)
 	docker push $(IMAGE_REGISTRY)/$(IMAGE_NAME):$(IMAGE_TAG)
 
