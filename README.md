@@ -2,7 +2,7 @@
 
 The grpc port is served on 8081.  I also created an http server which just uses the grpc service as the backend.
 
-The http call is a POST request with a JSON body that contains the different whitelisted countries by field name.   I didn't put the time into making it a proper array as I hadn't worked with grpc before and I was running out of time due to issues at my current job.
+The http call is a POST request with a JSON body that contains the different whitelisted countries by field name.  The boolean is superfluous.   I didn't put the time into making it a proper array as I hadn't worked with grpc before and I was running out of time due to issues at my current job.
 
 ``` 
 curl http://localhost:8082/v1/46.40.128.15 \
